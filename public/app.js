@@ -2,18 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const updatesFeed = document.getElementById("updates-feed");
     const commentsList = document.getElementById("comments-list");
     const commentForm = document.getElementById("comment-form");
-    const updateForm = document.getElementById("update-form");
-    const toggleAdminBtn = document.getElementById("toggle-admin-btn");
 
-    // Toggle Post Update Form
-    toggleAdminBtn.addEventListener("click", () => {
-        updateForm.classList.toggle("hidden");
-    });
-
-    // Fetch Updates Feed
+    // Fetch Updates Feed from DB
     async function fetchUpdates() {
         try {
             const res = await fetch('/api/updates');
+            if (!res.ok) throw new Error("Network response was not ok");
             const updates = await res.json();
 
             if (updates.length === 0) {
@@ -32,41 +26,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             `).join('');
         } catch (err) {
-            updatesFeed.innerHTML = "<p>Error loading feed.</p>";
+            updatesFeed.innerHTML = "<p style='color: #ef4444;'>Error loading feed.</p>";
         }
     }
 
-    // Post New Update (Admin)
-    updateForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const secret = document.getElementById("admin-secret").value;
-        const title = document.getElementById("update-title").value;
-        const tag = document.getElementById("update-tag").value;
-        const content = document.getElementById("update-content").value;
-
-        try {
-            const res = await fetch('/api/updates', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ secret, title, tag, content })
-            });
-
-            if (res.ok) {
-                updateForm.reset();
-                updateForm.classList.add("hidden");
-                fetchUpdates();
-            } else {
-                alert("Incorrect Admin Key!");
-            }
-        } catch (err) {
-            alert("Failed to publish update.");
-        }
-    });
-
-    // Fetch General Comments
+    // Fetch General Comments from DB
     async function fetchComments() {
         try {
             const res = await fetch('/api/comments');
+            if (!res.ok) throw new Error("Network response was not ok");
             const comments = await res.json();
 
             if (comments.length === 0) {
@@ -82,11 +50,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             `).join('');
         } catch (err) {
-            commentsList.innerHTML = "<p>Error loading comments.</p>";
+            commentsList.innerHTML = "<p style='color: #ef4444;'>Error loading comments.</p>";
         }
     }
 
-    // Submit Comment
+    // Submit Public Comment
     commentForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const author = document.getElementById("author-input").value.trim();

@@ -9,110 +9,71 @@
 <body>
 
     <div class="container">
-        <!-- Header & Short Bio -->
-        <header>
-            <h1>Ngetich K Peter</h1>
-            <p class="tagline">Backend & Full-Stack Developer</p>
-            <p class="bio-short">Building scalable systems and practical solutions. Passionate about clean code, databases, and developer experience. Always learning, always shipping.</p>
-        </header>
+        <!-- Cover Banner & Profile Picture Section -->
+        <div class="profile-header">
+            <div class="cover-photo" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop');"></div>
+            <div class="profile-avatar-container">
+                <img src="https://github.com/NgetichKPeter.png" alt="Ngetich K Peter" class="profile-avatar">
+            </div>
+            <div class="header-info">
+                <h1>Ngetich K Peter</h1>
+                <p class="tagline">Backend & Full-Stack Developer</p>
+                <p class="bio-short">Building scalable systems, offline-first sync engines, and local AI workflows. Passionate about clean code, databases, and continuous shipping.</p>
+            </div>
+        </div>
+
+        <!-- Latest Updates / Feed Section -->
+        <section class="card">
+            <div class="section-header">
+                <h2>Latest Updates & Ship Log</h2>
+                <button id="toggle-admin-btn" class="small-btn">+ New Update</button>
+            </div>
+
+            <!-- Admin Post Update Modal/Form (Hidden by default) -->
+            <form id="update-form" class="admin-post-form hidden">
+                <h3>Post an Update</h3>
+                <input type="password" id="admin-secret" placeholder="Admin Key (e.g. ngetich2026)" required>
+                <input type="text" id="update-title" placeholder="Update Title" required>
+                <input type="text" id="update-tag" placeholder="Tag (e.g. System Design, AI, Project)">
+                <textarea id="update-content" placeholder="Write your update..." rows="3" required></textarea>
+                <button type="submit">Publish Update</button>
+            </form>
+
+            <div id="updates-feed">
+                <p class="loading-text">Loading updates from database...</p>
+            </div>
+        </section>
 
         <!-- About Me Section -->
         <section class="card">
             <h2>About Me</h2>
-            <p>Hi, I'm <strong>Ngetich K Peter</strong> — a passionate Backend & Full-Stack Software Developer who loves turning complex problems into clean, scalable solutions.</p>
-            <p>With a strong focus on backend systems, databases, and modern development practices, I build reliable applications that perform at scale. Whether it's designing efficient APIs, optimizing database architectures, handling offline-first sync strategies, or exploring self-hosted infrastructure, I thrive on challenges that push both code and creativity.</p>
-
-            <h3 class="sub-heading">What drives me:</h3>
-            <ul class="drives-list">
-                <li><strong>Writing clean, maintainable code</strong> that other developers (and future me) will thank me for.</li>
-                <li><strong>Finding the right balance</strong> between rapid development and long-term scalability.</li>
-                <li><strong>Continuous learning</strong> — from system design and cloud architecture to emerging tools in the AI/ML space.</li>
-                <li><strong>Sharing knowledge</strong> and engaging with the developer community on X, Instagram, and beyond.</li>
-            </ul>
-
-            <p style="margin-top: 15px;">When I'm not coding, you'll find me creating content, experimenting with new technologies, or reflecting on how great engineering can solve real-world problems.</p>
-            <p><em>Currently open to new opportunities, collaborations, and interesting projects.</em></p>
+            <p>Hi, I'm <strong>Ngetich K Peter</strong> — a Backend & Full-Stack Software Developer focused on engineering clean, high-performance systems.</p>
+            <p>Whether it's optimizing PostgreSQL database schemas, building REST APIs with Express/Node, handling offline sync, or running local AI fine-tuning pipelines, I build solutions built to last.</p>
         </section>
 
-        <!-- Technical Stack -->
+        <!-- Connect Links -->
         <section class="card">
-            <h2>Technical Stack & Engineering Focus</h2>
-            
-            <div class="stack-group">
-                <h3>Backend & Systems</h3>
-                <div class="tags">
-                    <span>Python</span>
-                    <span>Node.js / Express</span>
-                    <span>TypeScript</span>
-                    <span>C++</span>
-                    <span>RESTful APIs</span>
-                    <span>Microservices</span>
-                </div>
-            </div>
-
-            <div class="stack-group">
-                <h3>Databases & Infrastructure</h3>
-                <div class="tags">
-                    <span>PostgreSQL</span>
-                    <span>SQL Optimization</span>
-                    <span>Offline-First Sync</span>
-                    <span>Docker</span>
-                    <span>Linux Administration</span>
-                    <span>Self-Hosted Infra</span>
-                </div>
-            </div>
-
-            <div class="stack-group">
-                <h3>AI / ML & Emerging Tools</h3>
-                <div class="tags">
-                    <span>PyTorch</span>
-                    <span>Hugging Face</span>
-                    <span>PEFT / LoRA</span>
-                    <span>Audio & Speech AI</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Infrastructure & Architecture Concepts -->
-        <section class="card">
-            <h2>Engineering Focus</h2>
-            <div class="focus-item">
-                <h3>🛠️ Backend Architecture</h3>
-                <p>Designing robust REST endpoints, connection pooling, cache-invalidation layers, and offline-first data sync engines built for reliability.</p>
-            </div>
-            <div class="focus-item">
-                <h3>🖥️ Self-Hosted Infrastructure</h3>
-                <p>Experimenting with private server setups, Dockerized workloads, self-hosted telemetry, and local-first AI pipelines to maintain low-cost execution and control over data.</p>
-            </div>
-        </section>
-
-        <!-- Social & Contact Links -->
-        <section class="card">
-            <h2>Connect Across Web</h2>
+            <h2>Connect & Networks</h2>
             <div class="links">
-                <a href="https://github.com/NgetichKPeter" target="_blank">GitHub (@NgetichKPeter)</a>
+                <a href="https://github.com/NgetichKPeter" target="_blank">GitHub</a>
                 <a href="https://huggingface.co/ngetichkpeter" target="_blank">Hugging Face</a>
-                <a href="https://quora.com/profile/ngetichkpeter" target="_blank">Quora</a>
-                <a href="https://reddit.com/user/ngetichkpeter" target="_blank">Reddit</a>
                 <a href="https://x.com/ngetichkpeter" target="_blank">X (Twitter)</a>
-                <a href="https://facebook.com/ngetichkpeter001" target="_blank">Facebook</a>
+                <a href="https://quora.com/profile/ngetichkpeter" target="_blank">Quora</a>
             </div>
-            <p class="contact-info">📞 <strong>Phone:</strong> +254 748 263 456 | 💬 <strong>Snapchat:</strong> <code>ngetichpeter97</code></p>
+            <p class="contact-info">📞 +254 748 263 456 | 💬 Snapchat: <code>ngetichpeter97</code></p>
         </section>
 
-        <!-- Custom Postgres-Powered Comments Section -->
+        <!-- General Feedback & Comments Section -->
         <section class="card">
-            <h2>Feedback & Comments</h2>
-            <p class="sub-text">Leave a thought or feedback below. Messages write directly to my live PostgreSQL database server.</p>
-            
+            <h2>Community Comments & Feedback</h2>
             <form id="comment-form">
                 <input type="text" id="author-input" placeholder="Your Name or Handle" required>
-                <textarea id="content-input" placeholder="Write your comment or project feedback here..." rows="3" required></textarea>
-                <button type="submit">Submit to Postgres DB</button>
+                <textarea id="content-input" placeholder="Leave a feedback or thoughts..." rows="3" required></textarea>
+                <button type="submit">Submit Comment</button>
             </form>
 
             <div id="comments-list">
-                <p>Loading comments from API server...</p>
+                <p class="loading-text">Loading comments...</p>
             </div>
         </section>
     </div>

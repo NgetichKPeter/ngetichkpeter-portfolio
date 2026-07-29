@@ -9,7 +9,7 @@
 <body>
 
     <div class="container">
-        <!-- Cover Banner & Profile Picture Section -->
+        <!-- Cover Banner & Profile Header Section -->
         <div class="profile-header">
             <div class="cover-photo" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop');"></div>
             <div class="profile-avatar-container">
@@ -25,19 +25,13 @@
         <!-- Latest Updates / Feed Section -->
         <section class="card">
             <div class="section-header">
-                <h2>Latest Updates & Ship Log</h2>
-                <button id="toggle-admin-btn" class="small-btn">+ New Update</button>
+                <h2>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                    Latest Updates & Ship Log
+                </h2>
             </div>
-
-            <!-- Admin Post Update Modal/Form (Hidden by default) -->
-            <form id="update-form" class="admin-post-form hidden">
-                <h3>Post an Update</h3>
-                <input type="password" id="admin-secret" placeholder="Admin Key (e.g. ngetich2026)" required>
-                <input type="text" id="update-title" placeholder="Update Title" required>
-                <input type="text" id="update-tag" placeholder="Tag (e.g. System Design, AI, Project)">
-                <textarea id="update-content" placeholder="Write your update..." rows="3" required></textarea>
-                <button type="submit">Publish Update</button>
-            </form>
 
             <div id="updates-feed">
                 <p class="loading-text">Loading updates from database...</p>
@@ -46,29 +40,49 @@
 
         <!-- About Me Section -->
         <section class="card">
-            <h2>About Me</h2>
+            <h2>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="16" x2="12" y2="12"/>
+                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                About Me
+            </h2>
             <p>Hi, I'm <strong>Ngetich K Peter</strong> — a Backend & Full-Stack Software Developer focused on engineering clean, high-performance systems.</p>
             <p>Whether it's optimizing PostgreSQL database schemas, building REST APIs with Express/Node, handling offline sync, or running local AI fine-tuning pipelines, I build solutions built to last.</p>
         </section>
 
         <!-- Connect Links -->
         <section class="card">
-            <h2>Connect & Networks</h2>
+            <h2>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+                Connect & Networks
+            </h2>
             <div class="links">
                 <a href="https://github.com/NgetichKPeter" target="_blank">GitHub</a>
                 <a href="https://huggingface.co/ngetichkpeter" target="_blank">Hugging Face</a>
                 <a href="https://x.com/ngetichkpeter" target="_blank">X (Twitter)</a>
                 <a href="https://quora.com/profile/ngetichkpeter" target="_blank">Quora</a>
             </div>
-            <p class="contact-info">📞 +254 748 263 456 | 💬 Snapchat: <code>ngetichpeter97</code></p>
+            <p class="contact-info" style="margin-top: 12px; font-size: 0.9rem; color: var(--muted);">
+                Phone: +254 748 263 456 | Snapchat: <code>ngetichpeter97</code>
+            </p>
         </section>
 
         <!-- General Feedback & Comments Section -->
         <section class="card">
-            <h2>Community Comments & Feedback</h2>
+            <h2>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                Community Comments & Feedback
+            </h2>
             <form id="comment-form">
                 <input type="text" id="author-input" placeholder="Your Name or Handle" required>
-                <textarea id="content-input" placeholder="Leave a feedback or thoughts..." rows="3" required></textarea>
+                <textarea id="content-input" placeholder="Leave feedback or thoughts..." rows="3" required></textarea>
                 <button type="submit">Submit Comment</button>
             </form>
 

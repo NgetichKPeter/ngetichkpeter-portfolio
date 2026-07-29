@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Ngetich K Peter</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-panel { margin-top: 20px; }
+        .danger-btn { background: #ef4444; color: #fff; padding: 4px 8px; font-size: 0.8rem; }
+        .admin-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Admin Control Panel</h1>
+            <p class="tagline">Manage Updates & Moderate Comments</p>
+        </header>
+
+        <!-- Login Section -->
+        <section id="login-section" class="card">
+            <h2>Authentication</h2>
+            <form id="login-form">
+                <input type="password" id="admin-pass" placeholder="Enter Admin Secret Key" required>
+                <button type="submit">Access Dashboard</button>
+            </form>
+        </section>
+
+        <!-- Admin Dashboard (Hidden until logged in) -->
+        <div id="dashboard" class="hidden">
+            <!-- Publish Update Card -->
+            <section class="card">
+                <h2>Publish New Update / Ship Log</h2>
+                <form id="post-update-form">
+                    <input type="text" id="up-title" placeholder="Title" required>
+                    <input type="text" id="up-tag" placeholder="Tag (e.g., Backend, System Design, AI)">
+                    <textarea id="up-content" placeholder="Content..." rows="4" required></textarea>
+                    <button type="submit">Publish Update</button>
+                </form>
+            </section>
+
+            <!-- Moderate Updates Card -->
+            <section class="card">
+                <h2>Manage Updates</h2>
+                <div id="admin-updates-list">Loading...</div>
+            </section>
+
+            <!-- Moderate Comments Card -->
+            <section class="card">
+                <h2>Moderate Comments</h2>
+                <div id="admin-comments-list">Loading...</div>
+            </section>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

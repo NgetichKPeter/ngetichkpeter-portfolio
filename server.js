@@ -1,72 +1,19 @@
-const express = require('express');
-const { Pool } = require('pg');
-const cors = require('cors');
-const path = require('path');
-require('dotenv').config();
+// --- ADMIN API ENDPOINTS ---
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+// Simple password verification middleware/check
+const verifyAdmin = (req, res, next) => {
+  const adminKey = req.headers['x-admin-key'] || req.body.secret;
+  const validKey = process.env.ADMIN_SECRET || 'ngetich2026';
 
-app.use(cors());
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
-});
-
-// Auto-initialize DB tables
-async function initDb() {
-  try {
-    // General Comments Table
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS comments (
-        id SERIAL PRIMARY KEY,
-        author VARCHAR(100) NOT NULL,
-        content TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `);
-
-    // Dynamic Updates Table
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS updates (
-        id SERIAL PRIMARY KEY,
-        title VARCHAR(200) NOT NULL,
-        content TEXT NOT NULL,
-        tag VARCHAR(50) DEFAULT 'General',
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `);
-    console.log("PostgreSQL Tables Verified/Created");
-  } catch (err) {
-    console.error("Database initialization error:", err);
+  if (adminKey !== validKey) {
+    return res.status(403).json({ error: 'Forbidden: Invalid Admin Key' });
   }
-}
-initDb();
+  next();
+};
 
-// --- REST API ENDPOINTS ---
-
-// GET /api/updates - Fetch all portfolio updates
-app.get('/api/updates', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM updates ORDER BY created_at DESC');
-    res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: 'Database fetch error' });
-  }
-});
-
-// POST /api/updates - Post a new update (Tip: Keep password or admin check for yourself)
-app.post('/api/updates', async (req, res) => {
-  const { title, content, tag, secret } = req.body;
-  
-  // Basic security check (set ADMIN_SECRET in environment variables)
-  if (secret !== process.env.ADMIN_SECRET && secret !== 'ngetich2026') {
-    return res.status(403).json({ error: 'Unauthorized' });
-  }
-
+// POST /api/admin/updates - Post a new update
+app.post('/api/admin/updates', verifyAdmin, async (req, res) => {
+  const { title, content, tag } = req.body;
   try {
     const result = await pool.query(
       'INSERT INTO updates (title, content, tag) VALUES ($1, $2, $3) RETURNING *',
@@ -74,37 +21,28 @@ app.post('/api/updates', async (req, res) => {
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: 'Database insert error' });
+    res.status(500).json({ error: 'Database error' });
   }
 });
 
-// GET & POST Comments
-app.get('/api/comments', async (req, res) => {
+// DELETE /api/admin/comments/:id - Remove spam or unwanted comments
+app.delete('/api/admin/comments/:id', verifyAdmin, async (req, res) => {
+  const { id } = req.params;
   try {
-    const result = await pool.query('SELECT * FROM comments ORDER BY created_at DESC');
-    res.json(result.rows);
+    await pool.query('DELETE FROM comments WHERE id = $1', [id]);
+    res.json({ success: true, message: 'Comment deleted' });
   } catch (err) {
-    res.status(500).json({ error: 'Database fetch error' });
+    res.status(500).json({ error: 'Failed to delete comment' });
   }
 });
 
-app.post('/api/comments', async (req, res) => {
-  const { author, content } = req.body;
-  if (!author || !content) return res.status(400).json({ error: 'Missing fields' });
-
+// DELETE /api/admin/updates/:id - Remove an update
+app.delete('/api/admin/updates/:id', verifyAdmin, async (req, res) => {
+  const { id } = req.params;
   try {
-    const result = await pool.query(
-      'INSERT INTO comments (author, content) VALUES ($1, $2) RETURNING *',
-      [author, content]
-    );
-    res.status(201).json(result.rows[0]);
+    await pool.query('DELETE FROM updates WHERE id = $1', [id]);
+    res.json({ success: true, message: 'Update deleted' });
   } catch (err) {
-    res.status(500).json({ error: 'Database insert error' });
+    res.status(500).json({ error: 'Failed to delete update' });
   }
 });
-
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-}
-
-module.exports = app;

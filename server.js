@@ -1,48 +1,36 @@
-// --- ADMIN API ENDPOINTS ---
+const express = require('express');
+const { Pool } = require('pg');
+const cors = require('cors');
 
-// Simple password verification middleware/check
-const verifyAdmin = (req, res, next) => {
-  const adminKey = req.headers['x-admin-key'] || req.body.secret;
-  const validKey = process.env.ADMIN_SECRET || 'ngetich2026';
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-  if (adminKey !== validKey) {
-    return res.status(403).json({ error: 'Forbidden: Invalid Admin Key' });
-  }
-  next();
-};
-
-// POST /api/admin/updates - Post a new update
-app.post('/api/admin/updates', verifyAdmin, async (req, res) => {
-  const { title, content, tag } = req.body;
-  try {
-    const result = await pool.query(
-      'INSERT INTO updates (title, content, tag) VALUES ($1, $2, $3) RETURNING *',
-      [title, content, tag || 'Engineering']
-    );
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: 'Database error' });
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
   }
 });
 
-// DELETE /api/admin/comments/:id - Remove spam or unwanted comments
-app.delete('/api/admin/comments/:id', verifyAdmin, async (req, res) => {
-  const { id } = req.params;
+app.get('/api/updates', async (req, res) => {
   try {
-    await pool.query('DELETE FROM comments WHERE id = $1', [id]);
-    res.json({ success: true, message: 'Comment deleted' });
+    const { rows } = await pool.query('SELECT * FROM updates ORDER BY created_at DESC');
+    res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to delete comment' });
+    console.error('Database query error:', err);
+    res.status(500).json({ error: 'Database connection error' });
   }
 });
 
-// DELETE /api/admin/updates/:id - Remove an update
-app.delete('/api/admin/updates/:id', verifyAdmin, async (req, res) => {
-  const { id } = req.params;
+app.get('/api/comments', async (req, res) => {
   try {
-    await pool.query('DELETE FROM updates WHERE id = $1', [id]);
-    res.json({ success: true, message: 'Update deleted' });
+    const { rows } = await pool.query('SELECT * FROM comments ORDER BY created_at DESC');
+    res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to delete update' });
+    console.error('Database query error:', err);
+    res.status(500).json({ error: 'Database connection error' });
   }
 });
+
+module.exports = app;
